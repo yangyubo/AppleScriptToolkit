@@ -9,7 +9,7 @@
 
 @implementation NSAppleEventDescriptor(StatzAppleEventDescriptorArrayAdditions)
 - (NSArray*)arrayValue {
-  int count = [self numberOfItems];
+  NSInteger count = [self numberOfItems];
   NSAppleEventDescriptor *workingDesc = self;
   if (count == 0) {
     // Create a list to work with.
@@ -44,7 +44,7 @@
 
 - (NSAppleEventDescriptor*)appleEventDescriptor {
   NSAppleEventDescriptor *desc = [NSAppleEventDescriptor listDescriptor];
-  unsigned count = [self count];
+  NSInteger count = [self count];
   for (unsigned i = 1; i <= count; ++i) {
     id item = [self objectAtIndex:i-1];
     NSAppleEventDescriptor *itemDesc = [item appleEventDescriptor];

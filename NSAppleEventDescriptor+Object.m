@@ -12,7 +12,6 @@ static NSMutableDictionary *gTypeMap = nil;
 
 @implementation NSAppleEventDescriptor(StatzAppleEventDescriptorObjectValueAdditions)
 + (void)registerSelector:(SEL)selector forTypes:(DescType*)types count:(int)count {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   if (selector && types && count > 0) {
     @synchronized(self) {
       if (!gTypeMap) {
@@ -29,13 +28,12 @@ static NSMutableDictionary *gTypeMap = nil;
                    exists, selString, key);
         }
         [gTypeMap setObject:selString forKey:key];
-        [key release];
       }
     }
   }
-  [pool release];
 }
 
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 - (id)objectValue {
   id value = nil;
   
@@ -52,7 +50,6 @@ static NSMutableDictionary *gTypeMap = nil;
           SEL selector = NSSelectorFromString(selectorString);
           value = [self performSelector:selector];
         }
-        [key release];
       }
     }
   }
